@@ -3,3 +3,4 @@ Para registrar el avance durante clases
 Integrantes:
  - Milene Alize Teran Flores
  - Edwin Ricardo Huanca Peralta
+ -Santiago Rafael Alfaro Rivera
