@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # db-boilerplate
 
 Docker boilerplate with **FastAPI**, **PostgreSQL**, and **MongoDB**, ready to run with a single command. Use this as the starting point for building your own endpoints.
@@ -153,3 +154,7 @@ The `app/` folder is mounted into the container, so any edits you make to `app/m
 - **`docker: command not found`**: Docker isn't installed or isn't on your `PATH`. Reinstall Docker Desktop and restart your terminal.
 - **Changes to `requirements.txt` aren't picked up**: Rebuild the image with `docker compose up --build`.
 - **Want a clean slate**: `docker compose down -v` removes containers and database volumes so the next `up` starts fresh.
+=======
+# Proyecto-Final.-BD
+Desarrollo de un Subsistema de Gestión de Historias Clínicas para la Red de Salud  MINSA
+>>>>>>> b0c1b1b33912e43f53af401ba621600e3790ee85
