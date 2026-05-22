@@ -123,5 +123,75 @@ INSERT INTO usuario_sist (id_personal, username, password, ult_acceso, estado) V
 (2, 'atorres',   'hashed_pass_2', '2026-05-10 09:00:00', 'activo'),
 (3, 'lgarcia',   'hashed_pass_3', '2026-04-20 07:45:00', 'activo'),
 (4, 'mchavez',   'hashed_pass_4', '2026-05-15 10:00:00', 'activo'),
+(5, 'jquispe', 'hashed_pass_5', '2026-03-30 08:00:00', 'inactivo'),
+(6, 'rflores', 'hashed_pass_6', NULL, 'inactivo'),
+(7, 'pvargas', 'hashed_pass_7', '2026-05-18 11:00:00', 'activo'),
+(8, 'lramirez', 'hashed_pass_8', '2026-05-17 14:30:00', 'activo');
+
+
+INSERT INTO usuario_rol (id_usuario, id_rol, fecha_asig) VALUES
+(1, 2, '2024-01-10'),
+(2, 2, '2024-01-15'),
+(3, 3, '2024-02-01'),
+(4, 2, '2024-02-10'),
+(5, 4, '2024-03-05'),
+(6, 2, '2024-03-20'),
+(7, 3, '2024-04-01'),
+(8, 4, '2024-04-15');
+ 
+
+INSERT INTO historia_clinica (id_paciente, num_hc, fech_apertura, estado, obser_general) VALUES
+(1, 'HC-2024-001', '2024-01-10', 'activo', 'Paciente con hipertensión controlada'),
+(2, 'HC-2024-002', '2024-01-15', 'activo', 'Sin antecedentes relevantes'),
+(3, 'HC-2024-003', '2024-02-01', 'activo', 'Paciente diabético tipo 2'),
+(4, 'HC-2024-004', '2024-02-10', 'activo', 'Antecedente quirúrgico: apendicectomía'),
+(5, 'HC-2024-005', '2024-03-05', 'activo', 'Alergia a penicilina'),
+(6, 'HC-2024-006', '2024-03-20', 'inactivo', 'Historia cerrada por traslado'),
+(7, 'HC-2024-007', '2024-04-01', 'activo', 'Paciente con asma leve'),
+(8, 'HC-2024-008', '2024-04-15', 'activo', 'Sin observaciones');
+ 
+
+INSERT INTO consulta (id_historia, id_personal, fecha, hora, tipo, motivo, estado_paci, pre_registro_triage) VALUES
+(1, 1, '2026-04-01', '08:00', 'externa', 'Dolor de cabeza frecuente', 'estable', 'realizado'),
+(2, 2, '2026-04-02', '09:30', 'externa', 'Fiebre y tos hace 3 días', 'estable', 'realizado'),
+(3, 1, '2026-04-05', '10:00', 'control', 'Control de glucosa mensual', 'estable', 'realizado'),
+(4, 4, '2026-04-08', '11:00', 'emergencia', 'Dolor abdominal agudo', 'delicado', 'realizado'),
+(5, 2, '2026-04-10', '08:30', 'externa', 'Erupciones en la piel', 'estable', 'realizado'),
+(6, 1, '2026-04-12', '09:00', 'control', 'Control de presión arterial', 'estable', 'realizado'),
+(7, 3, '2026-04-15', '10:30', 'externa', 'Dificultad para respirar', 'estable', 'realizado'),
+(8, 4, '2026-04-18', '11:30', 'externa', 'Dolor de garganta y fiebre', 'estable', 'realizado');
+ 
+
+INSERT INTO triaje (id_consulta, peso_kg, talla_cm, fech_hora_toma, presi_art_si, presi_art_di, rpm, lpm, temp, spo2) VALUES
+(1, 72.5, 170.0, '2026-04-01 07:50:00', 130, 85, 18, 78, 36.8, 98),
+(2, 58.0, 162.0, '2026-04-02 09:20:00', 110, 70, 20, 88, 38.5, 97),
+(3, 85.0, 168.0, '2026-04-05 09:50:00', 120, 80, 17, 75, 36.6, 99),
+(4, 65.0, 155.0, '2026-04-08 10:50:00', 100, 65, 22, 95, 37.2, 96),
+(5, 70.0, 175.0, '2026-04-10 08:20:00', 115, 75, 18, 80, 36.9, 98),
+(6, 90.0, 172.0, '2026-04-12 08:50:00', 145, 95, 19, 82, 36.7, 97),
+(7, 55.0, 158.0, '2026-04-15 10:20:00', 105, 68, 24, 92, 37.0, 94),
+(8, 68.0, 165.0, '2026-04-18 11:20:00', 118, 76, 19, 84, 38.1, 98);
+ 
+
+INSERT INTO func_bio (id_consulta, apetito, sed, sueno, deposicion, obser_adi, actv_sexual) VALUES
+(1, 'normal', 'normal', 'regular', 'normal', 'Refiere estrés laboral', 'activa'),
+(2, 'disminuido', 'aumentada', 'irregular', 'normal', 'Fiebre desde hace 3 días', 'no refiere'),
+(3, 'normal', 'aumentada', 'normal', 'normal', 'Dieta controlada en azúcares', 'activa'),
+(4, 'ausente', 'normal', 'irregular', 'estreñimiento','Dolor intenso en fosa iliaca', 'no refiere'),
+(5, 'normal', 'normal', 'normal', 'normal', 'Alergia a alimentos no definida', 'activa'),
+(6, 'normal', 'normal', 'regular', 'normal', 'Medicación antihipertensiva', 'activa'),
+(7, 'disminuido', 'normal', 'irregular', 'normal', 'Usa inhalador ocasionalmente', 'no refiere'),
+(8, 'disminuido', 'aumentada', 'irregular', 'normal', 'Odinofagia intensa', 'no refiere');
+ 
+
+INSERT INTO antecedente (id_antecedente2, id_consulta, tipo, fech_registro, gravedad, descripcion) VALUES
+(NULL, 1, 'patologico', '2026-04-01', 'leve', 'Hipertensión arterial diagnosticada en 2020'),
+(NULL, 2, 'familiar', '2026-04-02', 'moderada', 'Padre con diabetes tipo 2'),
+(NULL, 3, 'patologico', '2026-04-05', 'moderada', 'Diabetes mellitus tipo 2 desde 2018'),
+(NULL, 4, 'quirurgico', '2026-04-08', 'grave', 'Apendicectomía en 2015'),
+(NULL, 5, 'patologico', '2026-04-10', 'leve', 'Rinitis alérgica crónica'),
+(NULL, 6, 'habito', '2026-04-12', 'moderada', 'Fumador 10 cigarrillos/día por 15 años'),
+(NULL, 7, 'patologico', '2026-04-15', 'leve', 'Asma bronquial desde la infancia'),
+(NULL, 8, 'familiar', '2026-04-18', 'leve', 'Madre con hipotiroidismo');
 
  
