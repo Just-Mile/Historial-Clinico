@@ -62,4 +62,66 @@ INSERT INTO result_exam (id_examen, tipo, nombre, fech_soli, fech_resultado, res
 (6, 'laboratorio', 'Perfil lipídico',      '2026-04-12', '2026-04-13', 'Colesterol total: 240 mg/dL','lipidico_006.pdf'),
 (7, 'imagen',      'Radiografía de tórax', '2026-04-15', '2026-04-15', 'Hiperinsuflación pulmonar',  'rx_torax_007.pdf'),
 (8, 'laboratorio', 'Cultivo faríngeo',     '2026-04-18', NULL,          NULL,                         NULL);
+
+
+INSERT INTO rol (nomb_rol, descripcion, permisos) VALUES
+('administrador', 'Acceso total al sistema',             'crear,leer,actualizar,eliminar'),
+('médico',        'Atención y registro de consultas',    'leer,actualizar,crear'),
+('enfermero',     'Registro de signos vitales y triage', 'leer,crear'),
+('técnico',       'Apoyo en exámenes auxiliares',        'leer,crear'),
+('recepcionista', 'Gestión de citas y pacientes',        'leer,crear,actualizar'),
+('auditor',       'Revisión de registros del sistema',   'leer'),
+('farmacéutico',  'Gestión de medicamentos y recetas',   'leer,actualizar'),
+('director',      'Supervisión general del centro',      'leer,crear,actualizar,eliminar');
+
+INSERT INTO medicamento (nomb_gene, nomb_comercial, concentracion, presentacion, grupo_alc) VALUES
+('paracetamol',  'Panadol',     '500mg',  'tableta', 'analgésico'),
+('amoxicilina',  'Amoxil',      '500mg',  'cápsula', 'antibiótico'),
+('ibuprofeno',   'Advil',       '400mg',  'tableta', 'antiinflamatorio'),
+('metformina',   'Glucophage',  '850mg',  'tableta', 'antidiabético'),
+('enalapril',    'Renitec',     '10mg',   'tableta', 'antihipertensivo'),
+('omeprazol',    'Prilosec',    '20mg',   'cápsula', 'gastroprotector'),
+('azitromicina', 'Zithromax',   '500mg',  'tableta', 'antibiótico'),
+('loratadina',   'Claritin',    '10mg',   'tableta', 'antihistamínico');
+
+
+INSERT INTO centro_salud (nombre, direccion, nivel_atencion, distrito) VALUES
+('Hospital Nacional Dos de Mayo',   'Av. Grau 13, Cercado de Lima',      'III', 'Cercado de Lima'),
+('Clínica San Pablo',               'Av. Javier Prado 1020, San Borja',  'II',  'San Borja'),
+('Posta Médica Villa María',        'Jr. Los Rosales 234, Villa María',  'I',   'Villa María del Triunfo'),
+('Hospital Edgardo Rebagliati',     'Av. Rebagliati 490, Jesús María',   'III', 'Jesús María'),
+('Centro de Salud San Juan',        'Jr. Huáscar 100, San Juan',         'I',   'San Juan de Lurigancho'),
+('Clínica Ricardo Palma',           'Av. Javier Prado 1066, San Isidro', 'II',  'San Isidro'),
+('Hospital María Auxiliadora',      'Av. Miguel Iglesias 968, SJM',      'III', 'San Juan de Miraflores'),
+('Posta Médica Los Olivos',         'Av. Antúnez de Mayolo 800',         'I',   'Los Olivos');
+ 
+
+INSERT INTO personal_salud (id_departamento, id_especialidad, dni, nombres, apellidos, rol, estado) VALUES
+(1, 1, '45123678', 'Carlos',  'Mendoza Ríos',    'médico',    'activo'),
+(1, 2, '32456789', 'Ana',     'Torres Vega',     'médico',    'activo'),
+(2, 3, '56789012', 'Luis',    'García Paredes',  'enfermero', 'activo'),
+(2, 1, '67890123', 'María',   'Chávez Luna',     'médico',    'activo'),
+(3, 4, '78901234', 'Jorge',   'Quispe Mamani',   'técnico',   'activo'),
+(1, 2, '89012345', 'Rosa',    'Flores Castillo', 'médico',    'inactivo'),
+(3, 3, '90123456', 'Pedro',   'Vargas Huanca',   'enfermero', 'activo'),
+(2, 5, '01234567', 'Lucía',   'Ramírez Soto',    'técnico',   'activo');
+ 
+
+INSERT INTO pacientes (id_ubigeo, dni, nombres, apellidos, fecha_nac, sexo, grupo_sang, telefono, direccion, email) VALUES
+(1, '72345678', 'Juan',   'Pérez López',    '1990-03-15', 'M', 'O+',  '987654321', 'Av. Lima 123',     'juan.perez@gmail.com'),
+(2, '83456789', 'María',  'García Torres',  '1985-07-22', 'F', 'A+',  '976543210', 'Jr. Cusco 456',    'maria.garcia@gmail.com'),
+(3, '94567890', 'Carlos', 'Ramos Huanca',   '2000-11-05', 'M', 'B+',  '965432109', 'Av. Arequipa 789', 'carlos.ramos@gmail.com'),
+(1, '05678901', 'Lucía',  'Flores Mamani',  '1978-01-30', 'F', 'AB+', '954321098', 'Jr. Puno 321',     'lucia.flores@gmail.com'),
+(2, '16789012', 'Pedro',  'Vargas Quispe',  '1995-06-18', 'M', 'O-',  '943210987', 'Av. Tacna 654',    'pedro.vargas@gmail.com'),
+(3, '27890123', 'Rosa',   'Mendoza Chávez', '1968-09-25', 'F', 'A-',  '932109876', 'Jr. Moquegua 987', 'rosa.mendoza@gmail.com'),
+(1, '38901234', 'Jorge',  'Castillo Soto',  '1988-04-12', 'M', 'B-',  '921098765', 'Av. Ayacucho 147', 'jorge.castillo@gmail.com'),
+(2, '49012345', 'Ana',    'Ríos Paredes',   '2002-12-08', 'F', 'O+',  '910987654', 'Jr. Junín 258',    'ana.rios@gmail.com');
+ 
+
+INSERT INTO usuario_sist (id_personal, username, password, ult_acceso, estado) VALUES
+(1, 'cmendoza',  'hashed_pass_1', '2026-05-01 08:30:00', 'activo'),
+(2, 'atorres',   'hashed_pass_2', '2026-05-10 09:00:00', 'activo'),
+(3, 'lgarcia',   'hashed_pass_3', '2026-04-20 07:45:00', 'activo'),
+(4, 'mchavez',   'hashed_pass_4', '2026-05-15 10:00:00', 'activo'),
+
  
