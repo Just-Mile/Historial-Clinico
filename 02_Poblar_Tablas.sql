@@ -7,3 +7,12 @@ VALUES
 (3, 80.00, 180.0, '2026-05-20 09:30:00', 130, 85, 22, 80, 38.1, 95),
 (4, 55.40, 160.0, '2026-05-20 10:00:00', 100, 65, 19, 70, 36.7, 99),
 (5, 72.80, 172.0, '2026-05-20 10:30:00', 125, 82, 21, 78, 37.4, 96);
+
+INSERT INTO func_bio
+(id_consulta, apetito, sed, sueno, deposicion, obser_adi, actv_sexual)
+VALUES
+(1, 'Normal', 'Moderada', '8 horas', 'Regular', 'Sin observaciones', 'Activa'),
+(2, 'Disminuido', 'Alta', '6 horas', 'Estreñimiento', 'Dolor abdominal leve', 'Activa'),
+(3, 'Aumentado', 'Normal', '7 horas', 'Regular', 'Ninguna', 'Inactiva'),
+(4, 'Normal', 'Baja', '5 horas', 'Diarrea', 'Fatiga constante', 'Activa'),
+(5, 'Disminuido', 'Alta', '4 horas', 'Regular', 'Pérdida de apetito', 'Inactiva');
