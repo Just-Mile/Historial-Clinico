@@ -56,3 +56,16 @@ SET fech_resultado = '2026-04-20',
     archivo_result = 'cultivo_008.pdf'
 WHERE id_resultado = 8;
  
+UPDATE medicamento
+SET nomb_gene = 'Dextametazona',
+    nomb_comercial = 'Dextrilo'
+WHERE nomb_comercial = 'Zithromax';
+
+UPDATE rol
+SET nomb_rol = 'administrador',
+    descripcion = 'Acceso total al sistema'
+WHERE nomb_rol = 'médico';
+
+UPDATE pacientes
+SET direccion='Jiron las Condes 6767', telefono='999967769'
+WHERE apellidos='Vargas Quispe';
