@@ -74,3 +74,8 @@ WHERE apellidos='Vargas Quispe';
 Update historia clinica
 set obser_general ='faringitis aguda bacterian en 2026'
 where id_paciente=8;
+
+update consulta
+set estado_paci='delicado',
+    motivo='valor critico en presion'
+where id_consulta=6;
