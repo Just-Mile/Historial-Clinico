@@ -79,3 +79,7 @@ update consulta
 set estado_paci='delicado',
     motivo='valor critico en presion'
 where id_consulta=6;
+
+update func_bio
+set apetito='disminuido'
+where id_consulta=4;
