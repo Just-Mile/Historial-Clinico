@@ -1,16 +1,15 @@
 CREATE TABLE IF NOT EXISTS triaje (
-    id_triaje       SERIAL PRIMARY KEY,
-    id_paciente     INT NOT NULL,     
-    fecha           DATE NOT NULL,      
-    peso_kg         NUMERIC(5,2) NOT NULL,
-    talla_cm        NUMERIC(5,1) NOT NULL,
-    fech_hora_toma  TIMESTAMP NOT NULL,
-    presi_art_si    SMALLINT,
-    presi_art_di    SMALLINT,
-    rpm             SMALLINT,
-    lpm             SMALLINT,
-    temp            NUMERIC(4,1),
-    spo2            SMALLINT
+     id_triaje      SERIAL PRIMARY KEY,
+    
+    peso_kg        NUMERIC(5,2) NOT NULL,
+    talla_cm       NUMERIC(5,1) NOT NULL,
+    fech_hora_toma TIMESTAMP,
+    presi_art_si   SMALLINT,
+    presi_art_di   SMALLINT,
+    rpm            SMALLINT,
+    lpm            SMALLINT,
+    temp           NUMERIC(4,1),
+    spo2           SMALLINT
 );
 
 CREATE TABLE IF NOT EXISTS func_bio (
