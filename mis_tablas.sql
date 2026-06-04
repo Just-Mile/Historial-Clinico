@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS result_exam (
 
 CREATE TABLE IF NOT EXISTS personal_salud (
     id_personal    SERIAL PRIMARY KEY,
-    departamento INT          NOT NULL,
-    especialidad INT          NOT NULL,
+    id_departamento INT          NOT NULL,
+    id_especialidad INT          NOT NULL,
     dni            VARCHAR(20)  NOT NULL,
     nombres        VARCHAR(100) NOT NULL,
     apellidos      VARCHAR(100) NOT NULL,
@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS personal_salud (
 CREATE TABLE IF NOT EXISTS medicamento (
     id_medicamento  SERIAL PRIMARY KEY,
     nomb_gene       VARCHAR(200) NOT NULL,
+    nomb_comercial  VARCHAR(200),
     concentracion   VARCHAR(100) NOT NULL,
     presentacion    VARCHAR(100) NOT NULL,
-    nomb_comercial  VARCHAR(200),
-    grupo_atc       VARCHAR(100)
+    grupo_alc       VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS usuario_sist (
