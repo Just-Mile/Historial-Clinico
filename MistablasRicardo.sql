@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS consulta (
     hora           TIME         NOT NULL,
     tipo           VARCHAR(50)  NOT NULL,
     motivo         VARCHAR(500) NOT NULL,
-    estado_paci    VARCHAR(50)  NOT NULL
+    estado_paci    VARCHAR(50)  NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS examen_aux (
