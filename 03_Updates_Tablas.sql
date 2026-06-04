@@ -71,7 +71,7 @@ SET direccion='Jiron las Condes 6767', telefono='999967769'
 WHERE apellidos='Vargas Quispe';
 
 
-Update historia clinica
+Update historia_clinica
 set obser_general ='faringitis aguda bacterian en 2026'
 where id_paciente=8;
 
