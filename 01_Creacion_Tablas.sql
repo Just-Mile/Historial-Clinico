@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS pacientes;
+DROP TABLE IF EXISTS centro_salud;
+DROP TABLE IF EXISTS historia_clinica;
+DROP TABLE IF EXISTS consulta;
+DROP TABLE IF EXISTS examen_aux;
+DROP TABLE IF EXISTS prescripcion;
+DROP TABLE IF EXISTS result_exam;
+DROP TABLE IF EXISTS personal_salud;
+DROP TABLE IF EXISTS medicamento;
+
 CREATE TABLE IF NOT EXISTS triaje (
     id_triaje       SERIAL PRIMARY KEY,
     id_paciente     INT NOT NULL,    
