@@ -22,7 +22,7 @@ WHERE id_diagnostico = 4;
 UPDATE enfermedad_actual
 SET tiempo_enf = '10 días',
     descripcion = 'Cefalea pulsátil bilateral intensa, no cede con analgésicos comunes'
-WHERE id_enfermedad = 1;
+WHERE id_enfermedad_act = 1;
 
 UPDATE tratamiento
 SET tipo = 'quirúrgico',
