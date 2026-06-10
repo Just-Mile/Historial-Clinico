@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS prescripcion;
 DROP TABLE IF EXISTS result_exam;
 DROP TABLE IF EXISTS personal_salud;
 DROP TABLE IF EXISTS medicamento;
-DROP TABLE IF EXISTs triaje;
+DROP TABLE IF EXISTS triaje;
 Drop TABLE IF EXISTS func_bio;
 Drop table if exists antecedente;
 DROP TABLE IF EXISTS diagnostico;
