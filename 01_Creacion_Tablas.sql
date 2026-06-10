@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS triaje (
     lpm             SMALLINT,
     temp            NUMERIC(4,1),
     spo2            SMALLINT
+    constraint check_dif check(presi_art_si > presi_art_di)
 );
 
 
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS func_bio (
     sueno          VARCHAR(50),
     deposicion     VARCHAR(50),
     obser_adi      VARCHAR(300),
-    actv_sexual    VARCHAR(100)
+    actv_sexual    VARCHAR(100) check (actv_sexual='activa' or actv_sexual='no refiere')
 );
 
 
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS antecedente (
     id_historia     INT          NOT NULL,
     tipo            VARCHAR(50)  NOT NULL,
     fech_registro   DATE         NOT NULL,
-    gravedad        VARCHAR(30),
+    gravedad        VARCHAR(30) check(gravedad='leve'or gravedad='moderada' or gravedad='grave'),
     descripcion     VARCHAR(500)
 );
 
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS tratamiento (
     id_tratamiento  SERIAL PRIMARY KEY,
     id_consulta     INT          NOT NULL,
     id_personal     INT          NOT NULL,
-    tipo            VARCHAR(50)  NOT NULL,
+    tipo            VARCHAR(50)  NOT NULL CHECK(tipo in('quirurgico','farmacologico')),
     fech_ini        DATE         NOT NULL,
     fecha_fin       DATE,
     descripc        VARCHAR(300),
@@ -105,11 +106,11 @@ CREATE TABLE IF NOT EXISTS personal_salud (
     id_personal    SERIAL PRIMARY KEY,
     departamento INT          NOT NULL,
     especialidad INT          NOT NULL,
-    dni            VARCHAR(20) UNIQUE NOT NULL,
+    dni            VARCHAR(20) UNIQUE NOT NULL ,
     nombres        VARCHAR(100) NOT NULL,
     apellidos      VARCHAR(100) NOT NULL,
-    rol            VARCHAR(50)  NOT NULL,
-    estado         VARCHAR(20)
+    rol            VARCHAR(50)  NOT NULL check (rol in('medico','enfermero','tecnico')) ,
+    estado         VARCHAR(20) NOT NULL check(estado in('activo','inactivo'))
 );
 
 
@@ -156,7 +157,7 @@ CREATE TABLE IF NOT EXISTS pacientes (
     nombres       VARCHAR(50) NOT NULL,
     apellidos     VARCHAR(100) NOT NULL,
     fecha_nac     DATE         NOT NULL,
-    sexo          CHAR(1)      NOT NULL,
+    sexo          CHAR(1)      NOT NULL check(sexo in ('M','F')),
     grupo_sang    VARCHAR(5),
     telefono      VARCHAR(20)  NOT NULL,
     direccion     VARCHAR(200),
@@ -168,7 +169,7 @@ CREATE TABLE IF NOT EXISTS centro_salud (
     id_centro     SERIAL PRIMARY KEY,
     nombre        VARCHAR(50) NOT NULL,
     direccion     VARCHAR(200) NOT NULL,
-    nivel_atencion VARCHAR(50) NOT NULL,
+    nivel_atencion VARCHAR(50) NOT NULL check (nivel_atencion in ('I','II','III')),
     distrito      VARCHAR(100)
 );
 
@@ -191,7 +192,7 @@ CREATE TABLE IF NOT EXISTS consulta (
     id_triaje      INT          NOT NULL,
    
     fecha          DATE         NOT NULL,
-    hora           TIME         NOT NULL,
+    hora           TIME         NOT NULL check(hora between '00:00:00' and '23:59:59'),
     tipo           VARCHAR(50)  NOT NULL,
     motivo         VARCHAR(500) NOT NULL,
     estado_paci    VARCHAR(50)  NOT NULL
