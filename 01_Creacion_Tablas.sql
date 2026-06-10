@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS usuario_rol;
 
 CREATE TABLE IF NOT EXISTS triaje (
     id_triaje       SERIAL PRIMARY KEY,
-    id_paciente     INT NOT NULL,    
+       
     fecha           DATE NOT NULL,      
     peso_kg         NUMERIC(5,2) NOT NULL,
     talla_cm        NUMERIC(5,1) NOT NULL,
