@@ -223,78 +223,97 @@ CREATE TABLE IF NOT EXISTS prescripcion (
 
 ALTER TABLE historia_clinica 
 add constraint fk_id_centro
-foreign key (id_centro) references centro_salud(id_centro);
+foreign key (id_centro) references centro_salud(id_centro)
+on delete set null;
 
 ALTER TABLE historia_clinica 
 add constraint fk_id_paciente
-foreign key (id_paciente) references pacientes(id_paciente);
+foreign key (id_paciente) references pacientes(id_paciente)
+on delete set null;
 
 ALTER TABLE antecedente 
 add constraint fk_id_historia
-foreign key (id_historia) references historia_clinica(id_historia);
+foreign key (id_historia) references historia_clinica(id_historia)
+on delete cascade;
 
 ALTER TABLE consulta
 add constraint fk_id_historia
-foreign key (id_historia) references historia_clinica(id_historia);
+foreign key (id_historia) references historia_clinica(id_historia)
+on delete cascade;
 
 ALTER TABLE consulta
 add constraint fk_id_personal
-foreign key (id_personal) references personal_salud(id_personal);
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
 
 ALTER TABLE consulta
 add constraint fk_id_triaje
-foreign key (id_triaje) references triaje(id_triaje);
+foreign key (id_triaje) references triaje(id_triaje)
+on delete set null;
 
 ALTER TABLE examen_aux
 add constraint fk_id_consulta
-foreign key (id_consulta) references consulta(id_consulta);
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 ALTER TABLE examen_aux
 add constraint fk_id_personal
-foreign key (id_personal) references personal_salud(id_personal);
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
 
 ALTER TABLE result_exam
 add constraint fk_id_examen
-foreign key (id_examen) references examen_aux(id_examen);
+foreign key (id_examen) references examen_aux(id_examen)
+on delete cascade;
 
 ALTER TABLE usuario_sist
 add constraint fk_id_personal
-foreign key (id_personal) references personal_salud(id_personal);
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
 
 ALTER TABLE usuario_rol
 add constraint fk_id_usuario
-foreign key (id_usuario) references usuario_sist(id_usuario);
+foreign key (id_usuario) references usuario_sist(id_usuario)
+on delete cascade;
 
 ALTER TABLE usuario_rol
 add constraint fk_id_rol
-foreign key (id_rol) references rol(id_rol);
+foreign key (id_rol) references rol(id_rol)
+on delete cascade;
 
 ALTER TABLE prescripcion
 add constraint fk_id_tratamiento
-foreign key (id_tratamiento) references tratamiento(id_tratamiento);
+foreign key (id_tratamiento) references tratamiento(id_tratamiento)
+on delete cascade;
 
 ALTER TABLE prescripcion
 add constraint fk_id_medicamento
-foreign key (id_medicamento) references medicamento(id_medicamento);
+foreign key (id_medicamento) references medicamento(id_medicamento)
+on delete set null;
 
 ALTER TABLE tratamiento
 add constraint fk_id_consulta
-foreign key (id_consulta) references consulta(id_consulta);
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 ALTER TABLE tratamiento
 add constraint fk_id_personal
-foreign key (id_personal) references personal_salud(id_personal);
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
 
 ALTER TABLE diagnostico
 add constraint fk_id_consulta
-foreign key (id_consulta) references consulta(id_consulta);
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 ALTER TABLE enfermedad_actual
 add constraint fk_id_consulta
-foreign key (id_consulta) references consulta(id_consulta);
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 ALTER TABLE func_bio
 add constraint fk_id_consulta
-foreign key (id_consulta) references consulta(id_consulta);
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 
