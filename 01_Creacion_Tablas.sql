@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS enfermedad_actual (
 CREATE TABLE IF NOT EXISTS tratamiento (
     id_tratamiento  SERIAL PRIMARY KEY,
     id_consulta     INT          NOT NULL,
-    id_personal     INT          NOT NULL,
+    id_personal     INT          ,
     tipo            VARCHAR(50)  NOT NULL CHECK(tipo in('quirurgico','farmacologico')),
     fech_ini        DATE         NOT NULL,
     fecha_fin       DATE,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS medicamento (
 
 CREATE TABLE IF NOT EXISTS usuario_sist (
     id_usuario      SERIAL PRIMARY KEY,
-    id_personal     INT         UNIQUE NOT NULL,
+    id_personal     INT         UNIQUE,
     username        VARCHAR(100) NOT NULL,
     password        VARCHAR(255) NOT NULL,
     ult_acceso      TIMESTAMP,
@@ -176,8 +176,8 @@ CREATE TABLE IF NOT EXISTS centro_salud (
 
 CREATE TABLE IF NOT EXISTS historia_clinica (
     id_historia    SERIAL PRIMARY KEY,
-    id_centro      INT          NOT NULL,
-    id_paciente    INT          NOT NULL,
+    id_centro      INT          ,
+    id_paciente    INT          ,
     num_hc         VARCHAR(50)  UNIQUE NOT NULL,
     fech_apertura  DATE         NOT NULL,
     estado         VARCHAR(20),
@@ -188,8 +188,8 @@ CREATE TABLE IF NOT EXISTS historia_clinica (
 CREATE TABLE IF NOT EXISTS consulta (
     id_consulta    SERIAL PRIMARY KEY,
     id_historia    INT          NOT NULL,
-    id_personal    INT          NOT NULL,
-    id_triaje      INT          NOT NULL,
+    id_personal    INT          ,
+    id_triaje      INT          ,
    
     fecha          DATE         NOT NULL,
     hora           TIME         NOT NULL check(hora between '00:00:00' and '23:59:59'),
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS consulta (
 CREATE TABLE IF NOT EXISTS examen_aux (
     id_examen       SERIAL PRIMARY KEY,
     id_consulta     INT          NOT NULL,
-    id_personal     INT          NOT NULL,
+    id_personal     INT          ,
    
     tipo            VARCHAR(50)  NOT NULL,
     nombre          VARCHAR(200) NOT NULL,
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS examen_aux (
 CREATE TABLE IF NOT EXISTS prescripcion (
     id_prescripcion SERIAL PRIMARY KEY,
     id_tratamiento  INT          NOT NULL,
-    id_medicamento  INT          NOT NULL,
+    id_medicamento  INT          ,
     dosis           VARCHAR(100) NOT NULL,
     frecuencia      VARCHAR(100) NOT NULL,
     duracion_dias   INT          NOT NULL,
