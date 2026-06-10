@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS triaje (
 
 CREATE TABLE IF NOT EXISTS func_bio (
     id_funcion     SERIAL PRIMARY KEY,
-    id_consulta    INT          NOT NULL,
+    id_consulta    INT          UNIQUE NOT NULL,
     apetito        VARCHAR(50),
     sed            VARCHAR(50),
     sueno          VARCHAR(50),
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS tratamiento (
 
 CREATE TABLE IF NOT EXISTS result_exam (
     id_resultado    SERIAL PRIMARY KEY,
-    id_examen       INT          NOT NULL,
+    id_examen       INT          UNIQUE NOT NULL,
     tipo            VARCHAR(50)  NOT NULL,
     nombre          VARCHAR(200) NOT NULL,
     fech_soli       DATE         NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS personal_salud (
     id_personal    SERIAL PRIMARY KEY,
     departamento INT          NOT NULL,
     especialidad INT          NOT NULL,
-    dni            VARCHAR(20)  NOT NULL,
+    dni            VARCHAR(20) UNIQUE NOT NULL,
     nombres        VARCHAR(100) NOT NULL,
     apellidos      VARCHAR(100) NOT NULL,
     rol            VARCHAR(50)  NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS medicamento (
 
 CREATE TABLE IF NOT EXISTS usuario_sist (
     id_usuario      SERIAL PRIMARY KEY,
-    id_personal     INT          NOT NULL,
+    id_personal     INT         UNIQUE NOT NULL,
     username        VARCHAR(100) NOT NULL,
     password        VARCHAR(255) NOT NULL,
     ult_acceso      TIMESTAMP,
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS usuario_rol (
 
 CREATE TABLE IF NOT EXISTS pacientes (
     id_paciente   SERIAL PRIMARY KEY,
-    dni           VARCHAR(8)  NOT NULL,
+    dni           VARCHAR(8)  UNIQUE NOT NULL,
     nombres       VARCHAR(50) NOT NULL,
     apellidos     VARCHAR(100) NOT NULL,
     fecha_nac     DATE         NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS historia_clinica (
     id_historia    SERIAL PRIMARY KEY,
     id_centro      INT          NOT NULL,
     id_paciente    INT          NOT NULL,
-    num_hc         VARCHAR(50)  NOT NULL,
+    num_hc         VARCHAR(50)  UNIQUE NOT NULL,
     fech_apertura  DATE         NOT NULL,
     estado         VARCHAR(20),
     obser_general  VARCHAR(500)
