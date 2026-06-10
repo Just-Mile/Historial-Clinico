@@ -221,5 +221,80 @@ CREATE TABLE IF NOT EXISTS prescripcion (
     via_admin       VARCHAR(50)
 );
 
+ALTER TABLE historia_clinica 
+add constraint fk_id_centro
+foreign key (id_centro) references centro_salud(id_centro);
+
+ALTER TABLE historia_clinica 
+add constraint fk_id_paciente
+foreign key (id_paciente) references pacientes(id_paciente);
+
+ALTER TABLE antecedente 
+add constraint fk_id_historia
+foreign key (id_historia) references historia_clinica(id_historia);
+
+ALTER TABLE consulta
+add constraint fk_id_historia
+foreign key (id_historia) references historia_clinica(id_historia);
+
+ALTER TABLE consulta
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal);
+
+ALTER TABLE consulta
+add constraint fk_id_triaje
+foreign key (id_triaje) references triaje(id_triaje);
+
+ALTER TABLE examen_aux
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta);
+
+ALTER TABLE examen_aux
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal);
+
+ALTER TABLE result_exam
+add constraint fk_id_examen
+foreign key (id_examen) references examen_aux(id_examen);
+
+ALTER TABLE usuario_sist
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal);
+
+ALTER TABLE usuario_rol
+add constraint fk_id_usuario
+foreign key (id_usuario) references usuario_sist(id_usuario);
+
+ALTER TABLE usuario_rol
+add constraint fk_id_rol
+foreign key (id_rol) references rol(id_rol);
+
+ALTER TABLE prescripcion
+add constraint fk_id_tratamiento
+foreign key (id_tratamiento) references tratamiento(id_tratamiento);
+
+ALTER TABLE prescripcion
+add constraint fk_id_medicamento
+foreign key (id_medicamento) references medicamento(id_medicamento);
+
+ALTER TABLE tratamiento
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta);
+
+ALTER TABLE tratamiento
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal);
+
+ALTER TABLE diagnostico
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta);
+
+ALTER TABLE enfermedad_actual
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta);
+
+ALTER TABLE func_bio
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta);
 
 
