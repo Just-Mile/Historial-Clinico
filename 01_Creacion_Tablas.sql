@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS prescripcion;
 DROP TABLE IF EXISTS result_exam;
 DROP TABLE IF EXISTS personal_salud;
 DROP TABLE IF EXISTS medicamento;
-DROP TABLE IF EXISTs triaje;
+DROP TABLE IF EXISTS triaje;
 Drop TABLE IF EXISTS func_bio;
 Drop table if exists antecedente;
 DROP TABLE IF EXISTS diagnostico;
@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS usuario_rol;
 
 CREATE TABLE IF NOT EXISTS triaje (
     id_triaje       SERIAL PRIMARY KEY,
-    id_paciente     INT NOT NULL,    
+       
     fecha           DATE NOT NULL,      
     peso_kg         NUMERIC(5,2) NOT NULL,
     talla_cm        NUMERIC(5,1) NOT NULL,
@@ -30,18 +30,19 @@ CREATE TABLE IF NOT EXISTS triaje (
     lpm             SMALLINT,
     temp            NUMERIC(4,1),
     spo2            SMALLINT
+    constraint check_dif check(presi_art_si > presi_art_di)
 );
 
 
 CREATE TABLE IF NOT EXISTS func_bio (
     id_funcion     SERIAL PRIMARY KEY,
-    id_consulta    INT          NOT NULL,
+    id_consulta    INT          UNIQUE NOT NULL,
     apetito        VARCHAR(50),
     sed            VARCHAR(50),
     sueno          VARCHAR(50),
     deposicion     VARCHAR(50),
     obser_adi      VARCHAR(300),
-    actv_sexual    VARCHAR(100)
+    actv_sexual    VARCHAR(100) check (actv_sexual='activa' or actv_sexual='no refiere')
 );
 
 
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS antecedente (
     id_historia     INT          NOT NULL,
     tipo            VARCHAR(50)  NOT NULL,
     fech_registro   DATE         NOT NULL,
-    gravedad        VARCHAR(30),
+    gravedad        VARCHAR(30) check(gravedad='leve'or gravedad='moderada' or gravedad='grave'),
     descripcion     VARCHAR(500)
 );
 
@@ -77,8 +78,8 @@ CREATE TABLE IF NOT EXISTS enfermedad_actual (
 CREATE TABLE IF NOT EXISTS tratamiento (
     id_tratamiento  SERIAL PRIMARY KEY,
     id_consulta     INT          NOT NULL,
-    id_personal     INT          NOT NULL,
-    tipo            VARCHAR(50)  NOT NULL,
+    id_personal     INT          ,
+    tipo            VARCHAR(50)  NOT NULL CHECK(tipo in('quirurgico','farmacologico')),
     fech_ini        DATE         NOT NULL,
     fecha_fin       DATE,
     descripc        VARCHAR(300),
@@ -91,7 +92,7 @@ CREATE TABLE IF NOT EXISTS tratamiento (
 
 CREATE TABLE IF NOT EXISTS result_exam (
     id_resultado    SERIAL PRIMARY KEY,
-    id_examen       INT          NOT NULL,
+    id_examen       INT          UNIQUE NOT NULL,
     tipo            VARCHAR(50)  NOT NULL,
     nombre          VARCHAR(200) NOT NULL,
     fech_soli       DATE         NOT NULL,
@@ -105,11 +106,11 @@ CREATE TABLE IF NOT EXISTS personal_salud (
     id_personal    SERIAL PRIMARY KEY,
     departamento INT          NOT NULL,
     especialidad INT          NOT NULL,
-    dni            VARCHAR(20)  NOT NULL,
+    dni            VARCHAR(20) UNIQUE NOT NULL ,
     nombres        VARCHAR(100) NOT NULL,
     apellidos      VARCHAR(100) NOT NULL,
-    rol            VARCHAR(50)  NOT NULL,
-    estado         VARCHAR(20)
+    rol            VARCHAR(50)  NOT NULL check (rol in('medico','enfermero','tecnico')) ,
+    estado         VARCHAR(20) NOT NULL check(estado in('activo','inactivo'))
 );
 
 
@@ -125,7 +126,7 @@ CREATE TABLE IF NOT EXISTS medicamento (
 
 CREATE TABLE IF NOT EXISTS usuario_sist (
     id_usuario      SERIAL PRIMARY KEY,
-    id_personal     INT          NOT NULL,
+    id_personal     INT         UNIQUE,
     username        VARCHAR(100) NOT NULL,
     password        VARCHAR(255) NOT NULL,
     ult_acceso      TIMESTAMP,
@@ -152,11 +153,11 @@ CREATE TABLE IF NOT EXISTS usuario_rol (
 
 CREATE TABLE IF NOT EXISTS pacientes (
     id_paciente   SERIAL PRIMARY KEY,
-    dni           VARCHAR(8)  NOT NULL,
+    dni           VARCHAR(8)  UNIQUE NOT NULL,
     nombres       VARCHAR(50) NOT NULL,
     apellidos     VARCHAR(100) NOT NULL,
     fecha_nac     DATE         NOT NULL,
-    sexo          CHAR(1)      NOT NULL,
+    sexo          CHAR(1)      NOT NULL check(sexo in ('M','F')),
     grupo_sang    VARCHAR(5),
     telefono      VARCHAR(20)  NOT NULL,
     direccion     VARCHAR(200),
@@ -168,16 +169,16 @@ CREATE TABLE IF NOT EXISTS centro_salud (
     id_centro     SERIAL PRIMARY KEY,
     nombre        VARCHAR(50) NOT NULL,
     direccion     VARCHAR(200) NOT NULL,
-    nivel_atencion VARCHAR(50) NOT NULL,
+    nivel_atencion VARCHAR(50) NOT NULL check (nivel_atencion in ('I','II','III')),
     distrito      VARCHAR(100)
 );
 
 
 CREATE TABLE IF NOT EXISTS historia_clinica (
     id_historia    SERIAL PRIMARY KEY,
-    id_centro      INT          NOT NULL,
-    id_paciente    INT          NOT NULL,
-    num_hc         VARCHAR(50)  NOT NULL,
+    id_centro      INT          ,
+    id_paciente    INT          ,
+    num_hc         VARCHAR(50)  UNIQUE NOT NULL,
     fech_apertura  DATE         NOT NULL,
     estado         VARCHAR(20),
     obser_general  VARCHAR(500)
@@ -187,11 +188,11 @@ CREATE TABLE IF NOT EXISTS historia_clinica (
 CREATE TABLE IF NOT EXISTS consulta (
     id_consulta    SERIAL PRIMARY KEY,
     id_historia    INT          NOT NULL,
-    id_personal    INT          NOT NULL,
-    id_triaje      INT          NOT NULL,
+    id_personal    INT          ,
+    id_triaje      INT          ,
    
     fecha          DATE         NOT NULL,
-    hora           TIME         NOT NULL,
+    hora           TIME         NOT NULL check(hora between '00:00:00' and '23:59:59'),
     tipo           VARCHAR(50)  NOT NULL,
     motivo         VARCHAR(500) NOT NULL,
     estado_paci    VARCHAR(50)  NOT NULL
@@ -201,7 +202,7 @@ CREATE TABLE IF NOT EXISTS consulta (
 CREATE TABLE IF NOT EXISTS examen_aux (
     id_examen       SERIAL PRIMARY KEY,
     id_consulta     INT          NOT NULL,
-    id_personal     INT          NOT NULL,
+    id_personal     INT          ,
    
     tipo            VARCHAR(50)  NOT NULL,
     nombre          VARCHAR(200) NOT NULL,
@@ -213,12 +214,106 @@ CREATE TABLE IF NOT EXISTS examen_aux (
 CREATE TABLE IF NOT EXISTS prescripcion (
     id_prescripcion SERIAL PRIMARY KEY,
     id_tratamiento  INT          NOT NULL,
-    id_medicamento  INT          NOT NULL,
+    id_medicamento  INT          ,
     dosis           VARCHAR(100) NOT NULL,
     frecuencia      VARCHAR(100) NOT NULL,
     duracion_dias   INT          NOT NULL,
     via_admin       VARCHAR(50)
 );
 
+ALTER TABLE historia_clinica 
+add constraint fk_id_centro
+foreign key (id_centro) references centro_salud(id_centro)
+on delete set null;
+
+ALTER TABLE historia_clinica 
+add constraint fk_id_paciente
+foreign key (id_paciente) references pacientes(id_paciente)
+on delete set null;
+
+ALTER TABLE antecedente 
+add constraint fk_id_historia
+foreign key (id_historia) references historia_clinica(id_historia)
+on delete cascade;
+
+ALTER TABLE consulta
+add constraint fk_id_historia
+foreign key (id_historia) references historia_clinica(id_historia)
+on delete cascade;
+
+ALTER TABLE consulta
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
+
+ALTER TABLE consulta
+add constraint fk_id_triaje
+foreign key (id_triaje) references triaje(id_triaje)
+on delete set null;
+
+ALTER TABLE examen_aux
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
+
+ALTER TABLE examen_aux
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
+
+ALTER TABLE result_exam
+add constraint fk_id_examen
+foreign key (id_examen) references examen_aux(id_examen)
+on delete cascade;
+
+ALTER TABLE usuario_sist
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
+
+ALTER TABLE usuario_rol
+add constraint fk_id_usuario
+foreign key (id_usuario) references usuario_sist(id_usuario)
+on delete cascade;
+
+ALTER TABLE usuario_rol
+add constraint fk_id_rol
+foreign key (id_rol) references rol(id_rol)
+on delete cascade;
+
+ALTER TABLE prescripcion
+add constraint fk_id_tratamiento
+foreign key (id_tratamiento) references tratamiento(id_tratamiento)
+on delete cascade;
+
+ALTER TABLE prescripcion
+add constraint fk_id_medicamento
+foreign key (id_medicamento) references medicamento(id_medicamento)
+on delete set null;
+
+ALTER TABLE tratamiento
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
+
+ALTER TABLE tratamiento
+add constraint fk_id_personal
+foreign key (id_personal) references personal_salud(id_personal)
+on delete set null;
+
+ALTER TABLE diagnostico
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
+
+ALTER TABLE enfermedad_actual
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
+
+ALTER TABLE func_bio
+add constraint fk_id_consulta
+foreign key (id_consulta) references consulta(id_consulta)
+on delete cascade;
 
 

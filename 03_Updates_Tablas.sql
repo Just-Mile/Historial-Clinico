@@ -1,10 +1,10 @@
 UPDATE triaje
 SET peso_kg = 75.0, temp = 37.5
-WHERE id_consulta = 2;
+WHERE id_triaje = 2;
 
 UPDATE triaje
 SET presi_art_si = 120, presi_art_di = 80
-WHERE id_consulta = 6;
+WHERE id_triaje = 6;
 
 UPDATE centro_salud
 SET nivel_atencion = 'III'
@@ -22,7 +22,7 @@ WHERE id_diagnostico = 4;
 UPDATE enfermedad_actual
 SET tiempo_enf = '10 días',
     descripcion = 'Cefalea pulsátil bilateral intensa, no cede con analgésicos comunes'
-WHERE id_enfermedad = 1;
+WHERE id_enfermedad_act = 1;
 
 UPDATE tratamiento
 SET tipo = 'quirúrgico',
