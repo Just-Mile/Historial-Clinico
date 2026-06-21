@@ -28,3 +28,9 @@ UPDATE result_exam r
 SET resultado_detalle = '{"gen_analizado": "BRCA1", "mutacion_detectada": false, "metodo": "secuenciación"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'genético';
+
+-- Imagen (ecografía abdominal)
+UPDATE result_exam r
+SET resultado_detalle = '{"hallazgo": "Hígado de tamaño normal", "vesicula": "sin infección", "tecnica": "ecografía convexa"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'imagen' AND r.id_resultado % 5 = 0;
