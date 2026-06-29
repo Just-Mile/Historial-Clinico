@@ -56,3 +56,9 @@ UPDATE result_exam r
 SET resultado_detalle = '{"valor_1": "6.3", "valor_2": "12000", "valor_3": "89000", "observacion": "urgente"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 9 = 0;
+
+-- Resultado Genético Distinto
+UPDATE result_exam r
+SET resultado_detalle = '{"muestra": "saliva", "resultado": "no concluyente", "metodo": "secuenciacion parcial"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 7 = 0;
