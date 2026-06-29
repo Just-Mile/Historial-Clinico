@@ -39,3 +39,9 @@ UPDATE result_exam r
 SET resultado_detalle = '{"muestra": "tejido", "resultado": "positivo", "metodo": "analisis extendido"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 6 = 0;
+
+-- Anatomía distinta
+UPDATE result_exam r
+SET resultado_detalle = '{"tipo_tejido": "epitelial", "anomalia": true, "descripcion": "requiere revision adicional"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica' AND r.id_resultado % 6 = 0;
