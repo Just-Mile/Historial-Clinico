@@ -62,3 +62,8 @@ UPDATE result_exam r
 SET resultado_detalle = '{"muestra": "saliva", "resultado": "no concluyente", "metodo": "secuenciacion parcial"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 7 = 0;
+-- Anatomía patológica
+UPDATE result_exam r
+SET resultado_detalle = '{"tipo_tejido": "oseo", "anomalia": false, "descripcion": "sin hallazgos relevantes"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica' AND r.id_resultado % 7 = 0;
