@@ -45,3 +45,9 @@ UPDATE result_exam r
 SET resultado_detalle = '{"tipo_tejido": "epitelial", "anomalia": true, "descripcion": "requiere revision adicional"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica' AND r.id_resultado % 6 = 0;
+
+-- Resultado de laboratorio distinto
+UPDATE result_exam r
+SET resultado_detalle = '{"valor_1": "12.5", "valor_2": "8300", "valor_3": "190000", "observacion": "dentro de rangos"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 4 = 0;
