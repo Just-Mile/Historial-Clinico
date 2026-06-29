@@ -34,3 +34,8 @@ UPDATE result_exam r
 SET resultado_detalle = '{"hallazgo": "Hígado de tamaño normal", "vesicula": "sin infección", "tecnica": "ecografía convexa"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'imagen' AND r.id_resultado % 5 = 0;
+-- Genétic distinta
+UPDATE result_exam r
+SET resultado_detalle = '{"muestra": "tejido", "resultado": "positivo", "metodo": "analisis extendido"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 6 = 0;
