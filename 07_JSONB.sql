@@ -51,3 +51,8 @@ UPDATE result_exam r
 SET resultado_detalle = '{"valor_1": "12.5", "valor_2": "8300", "valor_3": "190000", "observacion": "dentro de rangos"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 4 = 0;
+-- Resultado de Laboratorio (urgencia)
+UPDATE result_exam r
+SET resultado_detalle = '{"valor_1": "6.3", "valor_2": "12000", "valor_3": "89000", "observacion": "urgente"}'
+FROM examen_aux e
+WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 9 = 0;
