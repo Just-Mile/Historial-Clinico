@@ -230,7 +230,7 @@ INSERT INTO examen_aux (id_consulta, id_personal, tipo, nombre, fech_soli, estad
 SELECT
     i,
     ((i-1) % 70) + 1,
-    (ARRAY['laboratorio','imagen','anatomía patológica','microbiología','genético'])[((i-1) % 5) + 1],
+    (ARRAY['laboratorio','imagen','anatomia patologica','microbiologia','genetico'])[((i-1) % 5) + 1],
     (ARRAY['Hemograma completo','Glucosa','Perfil lipídico','Radiografía tórax','Ecografía abdominal',
            'Urocultivo','Biopsia','PCR','Tomografía','Electrocardiograma'])[((i-1) % 10) + 1]
     || ' ' || i,
@@ -245,7 +245,7 @@ FROM generate_series(1, 1000) AS i;
 INSERT INTO result_exam (id_examen, tipo, nombre, fech_soli, fech_resultado, resultado, archivo_result)
 SELECT
     i,
-    (ARRAY['laboratorio','imagen','anatomía patológica','microbiología','genético'])[((i-1) % 5) + 1],
+    (ARRAY['laboratorio','imagen','anatomia patologica','microbiologia','genetico'])[((i-1) % 5) + 1],
     'Resultado examen ' || i,
     '2023-01-01'::date + ((i * 7) % 730),
     '2023-01-01'::date + ((i * 7) % 730) + (i % 7) + 1,
