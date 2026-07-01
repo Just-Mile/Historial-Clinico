@@ -1,69 +1,61 @@
 ALTER TABLE result_exam ADD COLUMN IF NOT EXISTS resultado_detalle JSONB;
-	-- Laboratorio
+
 UPDATE result_exam r
 SET resultado_detalle = '{"hemoglobina": "14.2 g/dL", "leucocitos": "7500/mm3", "plaquetas": "250000/mm3", "glucosa": "95 mg/dL"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio';
 
--- Imagen
 UPDATE result_exam r
 SET resultado_detalle = '{"hallazgo": "Sin consolidaciones", "indice_cardiotoracico": "0.45", "tecnica": "PA y lateral"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'imagen';
 
--- Anatomía patológica
 UPDATE result_exam r
 SET resultado_detalle = '{"tipo_tejido": "epitelial", "celulas_atipicas": false, "diagnostico_histologico": "tejido benigno"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica';
+WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomia patologica';
 
--- Microbiología
 UPDATE result_exam r
 SET resultado_detalle = '{"microorganismo": "Escherichia coli", "sensibilidad": ["ampicilina", "ciprofloxacino"], "ufc": "100000/mL"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'microbiología';
+WHERE r.id_examen = e.id_examen AND e.tipo = 'microbiologia';
 
--- Genético
 UPDATE result_exam r
-SET resultado_detalle = '{"gen_analizado": "BRCA1", "mutacion_detectada": false, "metodo": "secuenciación"}'
+SET resultado_detalle = '{"gen_analizado": "BRCA1", "mutacion_detectada": false, "metodo": "secuenciacion"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'genético';
+WHERE r.id_examen = e.id_examen AND e.tipo = 'genetico';
 
--- Imagen (ecografía abdominal)
 UPDATE result_exam r
-SET resultado_detalle = '{"hallazgo": "Hígado de tamaño normal", "vesicula": "sin infección", "tecnica": "ecografía convexa"}'
+SET resultado_detalle = '{"hallazgo": "Higado de tamano normal", "vesicula": "sin infeccion", "tecnica": "ecografia convexa"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'imagen' AND r.id_resultado % 5 = 0;
--- Genétic distinta
+
 UPDATE result_exam r
 SET resultado_detalle = '{"muestra": "tejido", "resultado": "positivo", "metodo": "analisis extendido"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 6 = 0;
+WHERE r.id_examen = e.id_examen AND e.tipo = 'genetico' AND r.id_resultado % 6 = 0;
 
--- Anatomía distinta
 UPDATE result_exam r
 SET resultado_detalle = '{"tipo_tejido": "epitelial", "anomalia": true, "descripcion": "requiere revision adicional"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica' AND r.id_resultado % 6 = 0;
+WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomia patologica' AND r.id_resultado % 6 = 0;
 
--- Resultado de laboratorio distinto
 UPDATE result_exam r
 SET resultado_detalle = '{"valor_1": "12.5", "valor_2": "8300", "valor_3": "190000", "observacion": "dentro de rangos"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 4 = 0;
--- Resultado de Laboratorio (urgencia)
+
 UPDATE result_exam r
 SET resultado_detalle = '{"valor_1": "6.3", "valor_2": "12000", "valor_3": "89000", "observacion": "urgente"}'
 FROM examen_aux e
 WHERE r.id_examen = e.id_examen AND e.tipo = 'laboratorio' AND r.id_resultado % 9 = 0;
 
--- Resultado Genético Distinto
 UPDATE result_exam r
 SET resultado_detalle = '{"muestra": "saliva", "resultado": "no concluyente", "metodo": "secuenciacion parcial"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'genético' AND r.id_resultado % 7 = 0;
--- Anatomía patológica
+WHERE r.id_examen = e.id_examen AND e.tipo = 'genetico' AND r.id_resultado % 7 = 0;
+
 UPDATE result_exam r
 SET resultado_detalle = '{"tipo_tejido": "oseo", "anomalia": false, "descripcion": "sin hallazgos relevantes"}'
 FROM examen_aux e
-WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomía patológica' AND r.id_resultado % 7 = 0;
+WHERE r.id_examen = e.id_examen AND e.tipo = 'anatomia patologica' AND r.id_resultado % 7 = 0;
