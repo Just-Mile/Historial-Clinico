@@ -5,11 +5,11 @@ BEGIN;
 
     -- PASO 1: Registrar el triaje del paciente
     INSERT INTO triaje (
-        id_paciente, fecha, peso_kg, talla_cm,
+        fecha, peso_kg, talla_cm,
         fech_hora_toma, presi_art_si, presi_art_di,
         rpm, lpm, temp, spo2
     ) VALUES (
-        1, CURRENT_DATE, 68.5, 165.0,
+        CURRENT_DATE, 68.5, 165.0,
         NOW(), 120, 80,
         18, 76, 36.7, 98
     );
@@ -49,11 +49,6 @@ BEGIN;
     );
 
 COMMIT;
-
--- ============================================================
--- Ejecutar este bloque en caso de error en lugar del COMMIT
--- ============================================================
-
 -- ROLLBACK;
 
 -- VERIFICACIÓN
@@ -65,7 +60,7 @@ SELECT
     c.id_consulta,
     c.motivo,
     c.estado_paci,
-    d.cod_cie10,
+    d.cod_cied10,
     d.descripcion AS diagnostico,
     tr.tipo AS tipo_tratamiento,
     tr.descripc AS tratamiento
