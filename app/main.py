@@ -16,6 +16,15 @@ mongo_client = MongoClient(os.environ["MONGO_URL"])
 def get_pg_conn():
     return psycopg2.connect(POSTGRES_URL)
 
+
+def _insert(cur, tabla, campos, valores, id_col):
+    placeholders = ", ".join(["%s"] * len(campos))
+    cur.execute(
+        f"INSERT INTO {tabla} ({', '.join(campos)}) VALUES ({placeholders}) RETURNING {id_col}",
+        valores,
+    )
+    return cur.fetchone()[id_col]
+
 @app.post("/consulta_completa/")
 def crear_consulta_completa(data: dict = Body(...)):
     
