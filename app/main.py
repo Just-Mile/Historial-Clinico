@@ -144,9 +144,13 @@ def tratamiento_detalle(id_tratamiento: int):
     with get_pg_conn() as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
         
         cur.execute("""
-            SELECT id_tratamiento, id_consulta, id_personal, tipo, fech_ini, fecha_fin, descripc, observaciones
-            FROM tratamiento
-            WHERE id_tratamiento = %s
+            SELECT t.id_tratamiento, t.tipo, t.fech_ini, t.fecha_fin, t.descripc, t.observaciones,
+                   ps.id_personal, ps.nombres AS nombre_profesional, ps.apellidos AS apellido_profesional, ps.rol,
+                   c.id_consulta, c.fecha AS fecha_consulta, c.hora AS hora_consulta, c.motivo AS motivo_consulta
+            FROM tratamiento t
+            JOIN consulta c ON t.id_consulta = c.id_consulta
+            LEFT JOIN personal_salud ps ON t.id_personal = ps.id_personal
+            WHERE t.id_tratamiento = %s
         """, (id_tratamiento,))
         tratamiento = cur.fetchone()
        
