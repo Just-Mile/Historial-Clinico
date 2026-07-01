@@ -16,6 +16,74 @@ mongo_client = MongoClient(os.environ["MONGO_URL"])
 def get_pg_conn():
     return psycopg2.connect(POSTGRES_URL)
 
+@app.post("/consulta_completa/")
+def crear_consulta_completa(data: dict = Body(...)):
+    
+    obligatorios = ["id_historia", "fecha", "hora", "tipo", "motivo", "estado_paci"]
+    
+   
+    triaje = data.get("triaje")
+    tratamiento = data.get("tratamiento")
+    conn = get_pg_conn()
+    try:
+        with conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+
+            
+            id_triaje = None
+            if triaje:
+                campos = ["fecha", "peso_kg", "talla_cm", "fech_hora_toma",
+                          "presi_art_si", "presi_art_di", "rpm", "lpm", "temp", "spo2"]
+                id_triaje = _insert(cur, "triaje", campos, [triaje.get(c) for c in campos], "id_triaje")
+ 
+            id_consulta = _insert(
+                cur, "consulta",
+                ["id_historia", "id_personal", "id_triaje", "fecha", "hora", "tipo", "motivo", "estado_paci"],
+                [data["id_historia"], data.get("id_personal"), id_triaje,
+                 data["fecha"], data["hora"], data["tipo"], data["motivo"], data["estado_paci"]],
+                "id_consulta",
+            )
+ 
+            ids_diagnosticos = [
+                _insert(cur, "diagnostico",
+                        ["id_consulta", "tipo", "fech_diagnostic", "cod_cie10", "descripcion"],
+                        [id_consulta, d.get("tipo"), d.get("fech_diagnostic"), d.get("cod_cie10"), d.get("descripcion")],
+                        "id_diagnostico")
+                for d in data.get("diagnosticos") or []
+            ]
+ 
+            id_tratamiento, ids_prescripciones = None, []
+            if tratamiento:
+                id_tratamiento = _insert(
+                    cur, "tratamiento",
+                    ["id_consulta", "id_personal", "tipo", "fech_ini", "fecha_fin", "descripc", "observaciones"],
+                    [id_consulta, tratamiento.get("id_personal"), tratamiento.get("tipo"),
+                     tratamiento.get("fech_ini"), tratamiento.get("fecha_fin"),
+                     tratamiento.get("descripc"), tratamiento.get("observaciones")],
+                    "id_tratamiento",
+                )
+                ids_prescripciones = [
+                    _insert(cur, "prescripcion",
+                            ["id_tratamiento", "id_medicamento", "dosis", "frecuencia", "duracion_dias", "via_admin"],
+                            [id_tratamiento, p.get("id_medicamento"), p.get("dosis"),
+                             p.get("frecuencia"), p.get("duracion_dias"), p.get("via_admin")],
+                            "id_prescripcion")
+                    for p in tratamiento.get("prescripciones") or []
+                ]
+ 
+        return {
+            "id_consulta": id_consulta,
+            "id_triaje": id_triaje,
+            "diagnosticos": ids_diagnosticos,
+            "id_tratamiento": id_tratamiento,
+            "prescripciones": ids_prescripciones,
+        }
+ 
+    
+    finally:
+        conn.close()
+ 
+
+
 @app.get("/personal_salud/")
 def personal_salud(estado: str):
     with psycopg2.connect(POSTGRES_URL) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
